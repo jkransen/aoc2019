@@ -10,7 +10,7 @@ class Day3Spec extends FlatSpec with Matchers {
 
   "The first moves" should "be parsed correctly" in {
     val path = "U7,R6,D4,L4"
-    val expected = List(Move('U', 7),Move('R', 6),Move('D', 4),Move('L', 4))
+    val expected = List(Move('U', 7), Move('R', 6), Move('D', 4), Move('L', 4))
     Day3.getMoves(path) shouldEqual expected
   }
 
@@ -23,8 +23,13 @@ class Day3Spec extends FlatSpec with Matchers {
       Point(6,4,16), Point(6,3,17), Point(5,3,18), Point(4,3,19), Point(3,3,20), Point(2,3,21))
   }
 
-  "Part 2" should "finish with correct result" in {
-    Day2.resultsPart2.headOption shouldEqual Some(4019)
+  "The nearest crossing" should "be at distance " in {
+    Day3.nearestCrossing shouldEqual Point(-39,-170,121356)
+    Day3.nearestCrossing.distance shouldEqual 209
   }
 
+  "The least combined steps" should "" in {
+    Day3.leastCombinedSteps shouldEqual Point(2667,1251,43258)
+    Day3.leastCombinedSteps.numSteps shouldEqual 43258
+  }
 }

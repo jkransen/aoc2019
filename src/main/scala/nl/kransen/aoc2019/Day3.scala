@@ -41,7 +41,7 @@ object Day3 extends App {
     }
   }
 
-  def crossings(visited1: Set[Point], visited2: Set[Point]): Set[Point] = {
+  def findCrossings(visited1: Set[Point], visited2: Set[Point]): Set[Point] = {
     for {
       first <- visited1
       second <- visited2
@@ -71,12 +71,12 @@ object Day3 extends App {
   val trails = initMoves().map(trail)
   val visited = trails.map(_.visited)
   visited.foreach(v => println(s"Trail containing ${v.size} points"))
-  val crossings = visited.reduce(crossings)
+  val crossings = visited.reduce(findCrossings)
   println(s"${crossings.size} crossings: $crossings")
-  val sortByNearest: Ordering[Point] = (one, two) =>  one.distance - two.distance
-  val nearestCrossing = crossings.toList.sorted(sortByNearest).head
+  val sortByNearest: Ordering[Point] = (one, two) => one.distance - two.distance
+  lazy val nearestCrossing = crossings.toList.sorted(sortByNearest).head
   println(s"${nearestCrossing} is nearest crossing at Manhattan distance ${abs(nearestCrossing.x + nearestCrossing.y)}")
-  val sortByLeastCombinedSteps: Ordering[Point] = (one, two) =>  one.numSteps - two.numSteps
-  val leastCombinedSteps = crossings.toList.sorted(sortByLeastCombinedSteps).head
+  val sortByLeastCombinedSteps: Ordering[Point] = (one, two) => one.numSteps - two.numSteps
+  lazy val leastCombinedSteps = crossings.toList.sorted(sortByLeastCombinedSteps).head
   println(s"${leastCombinedSteps} is crossing with least combined steps: ${leastCombinedSteps.numSteps}")
 }
