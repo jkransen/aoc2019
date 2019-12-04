@@ -13,13 +13,13 @@ object Day4 extends App {
   }
 
   @tailrec
-  def hasExactDuplicate(digits: List[Int], previousDuplicates: Set[Int] = Set(), previousThruplicates: Set[Int] = Set()): Boolean = {
+  def hasExactDuplicate(digits: List[Int], duplicates: Set[Int] = Set(), thruplicates: Set[Int] = Set()): Boolean = {
     digits match {
       case first :: second :: _ if first == second =>
-        hasExactDuplicate(digits.tail, previousDuplicates = previousDuplicates + first,
-          previousThruplicates = if (previousDuplicates.contains(first)) previousThruplicates + first else previousThruplicates)
-      case _ :: _ => hasExactDuplicate(digits.tail, previousDuplicates, previousThruplicates)
-      case _ => (previousDuplicates -- previousThruplicates).nonEmpty
+        hasExactDuplicate(digits.tail, duplicates = duplicates + first,
+          thruplicates = if (duplicates.contains(first)) thruplicates + first else thruplicates)
+      case _ :: _ => hasExactDuplicate(digits.tail, duplicates, thruplicates)
+      case _ => (duplicates -- thruplicates).nonEmpty
     }
   }
 
