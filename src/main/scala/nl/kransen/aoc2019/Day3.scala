@@ -75,7 +75,7 @@ object Day3 extends App {
   println(s"${crossings.size} crossings: $crossings")
   val sortByNearest: Ordering[Point] = (one, two) => one.distance - two.distance
   lazy val nearestCrossing = crossings.toList.sorted(sortByNearest).head
-  println(s"${nearestCrossing} is nearest crossing at Manhattan distance ${abs(nearestCrossing.x + nearestCrossing.y)}")
+  println(s"${nearestCrossing} is nearest crossing at Manhattan distance ${nearestCrossing.distance}")
   val sortByLeastCombinedSteps: Ordering[Point] = (one, two) => one.numSteps - two.numSteps
   lazy val leastCombinedSteps = crossings.toList.sorted(sortByLeastCombinedSteps).head
   println(s"${leastCombinedSteps} is crossing with least combined steps: ${leastCombinedSteps.numSteps}")
