@@ -42,7 +42,7 @@ object Day8 extends App {
 
   lazy val solution1 = onesTimesTwos(source)
 
-  println(s"Ones times twos of fewest zeros: ${solution1}")
+  println(s"Ones times twos of fewest zeros: ${solution1}\n")
 
   def flattenPixels(pixel1: Int, pixel2: Int): Int = {
     if (pixel1 == 2) pixel2 else pixel1
@@ -67,4 +67,6 @@ object Day8 extends App {
   def stringify(layer: Layer): String = {
     layer.map(row => row.map(i => if (i == 1) "#" else " ").mkString).mkString("\n")
   }
+
+  println(stringify(flatten(source)))
 }
