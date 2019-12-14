@@ -40,25 +40,31 @@ object Day14 extends App {
 
   /**
    * Recursively replaces the desired ingredients by the ingredients needed to get them, until only ORE remains.
+   * Targets are only replaced if they are not needed as sources anymore. Their recipes are removed to
+   * keep track of targets that were already unprocessed.
    */
   @tailrec
-  def source(output: Set[Ingredient], recipes: Map[String, Recipe]): Set[Ingredient] = {
-    if (output.size == 1 && output.head.name == "ORE") {
-      output
+  def source(ingredients: Set[Ingredient], recipes: Map[String, Recipe]): Set[Ingredient] = {
+    if (ingredients.size == 1 && ingredients.head.name == "ORE") {
+      ingredients
     } else {
-      val remainingRecipeInputs = recipes.values.flatMap(_.sources).map(_.name).toSet
-      val head = output.find(nxt => !remainingRecipeInputs.contains(nxt.name)).get
+      val remainingRecipes = recipes.values.flatMap(_.sources).map(_.name).toSet
+      val head = ingredients.find(next => !remainingRecipes.contains(next.name)).get
       val neededForHead = unprocess(head, recipes)
-      source(merge(neededForHead, output - head), recipes - head.name)
+      source(merge(neededForHead, ingredients - head), recipes - head.name)
     }
   }
 
-  def toIngredient(str: String): Ingredient = {
-    val chunks = str.trim.split(" ")
-    Ingredient(chunks(1), chunks(0).toInt)
-  }
-
+  /**
+   * Turns a List of input lines into Recipes from sources to target.
+   * @return A Map from target name to the Recipe to get to that target.
+   */
   def toRecipes(input: List[String]): Map[String, Recipe] = {
+    def toIngredient(str: String): Ingredient = {
+      val chunks = str.trim.split(" ")
+      Ingredient(chunks(1), chunks(0).toInt)
+    }
+
     input.map { line =>
       line.split("=>").toList match {
         case sourcesCombined :: targetStr :: _ =>
